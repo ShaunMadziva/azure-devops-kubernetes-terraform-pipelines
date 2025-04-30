@@ -17,6 +17,8 @@ stages:
           - bash: echo SourceBranchName:$(Build.SourceBranchName)
           - bash: echo SourcesDirectory:$(Build.SourcesDirectory)
           - bash: echo ArtifactStagingDirectory:$(Build.ArtifactStagingDirectory)
+          - bash: echo DefaultWorkingDirectory:$(System.DefaultWorkingDirectory)
+          - bash: ls -R $(System.DefaultWorkingDirectory)
 
       - job: SecondJob
         steps:
