@@ -14,6 +14,10 @@ steps:
   inputs:
     secureFile: 'azure_rsa.pub'
 
+- task: TerraformInstaller@2
+  inputs:
+    terraformVersion: 'latest'
+
 - task: TerraformCLI@2
   displayName: 'terraform init'
   inputs:
