@@ -25,4 +25,13 @@ stages:
           - bash: echo Deploy / FirstJob
 
   - stage: QADeploy
+    jobs:
+      - job: FirstJob
+        steps:
+          - bash: echo Deploy / FirstJob
+          
   - stage: ProdDeploy
+    jobs:
+      - job: FirstJob
+        steps:
+          - bash: echo Deploy / FirstJob
