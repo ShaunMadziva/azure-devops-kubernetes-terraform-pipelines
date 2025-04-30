@@ -14,8 +14,7 @@ steps:
   inputs:
     secureFile: 'azure_rsa.pub'
 
-- task: TerraformInstaller@1
-  displayName: install terraform
+- task: JasonBJohnson.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
   inputs:
     terraformVersion: latest
 
