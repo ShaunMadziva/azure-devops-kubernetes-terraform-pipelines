@@ -47,29 +47,29 @@ stages:
   - job: Deploy
     displayName: Deploy
     steps: 
-    - task: DownloadPipelineArtifact@2
-      inputs:
-        buildType: 'current'
-        artifactName: 'manifests'
-        itemPattern: '**/*.yaml'
-        targetPath: '$(System.ArtifactsDirectory)'
-    - task: KubernetesManifest@1
-      displayName: Deploy
-      inputs:
-        action: 'deploy'
-        connectionType: 'kubernetesServiceConnection'
-        kubernetesServiceConnection: 'aws-kubernetes-cluster-service-connection'
-        namespace: 'default'
-        manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
-        containers: shaunmadziva/currency-exchange-devops:$(tag)
-
-    # - task: KubernetesManifest@1
-    #   displayName: Destroy
+    # - task: DownloadPipelineArtifact@2
     #   inputs:
-    #     action: 'destroy'
+    #     buildType: 'current'
+    #     artifactName: 'manifests'
+    #     itemPattern: '**/*.yaml'
+    #     targetPath: '$(System.ArtifactsDirectory)'
+    # - task: KubernetesManifest@1
+    #   displayName: Deploy
+    #   inputs:
+    #     action: 'deploy'
     #     connectionType: 'kubernetesServiceConnection'
     #     kubernetesServiceConnection: 'aws-kubernetes-cluster-service-connection'
     #     namespace: 'default'
     #     manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
     #     containers: shaunmadziva/currency-exchange-devops:$(tag)
+
+    - task: KubernetesManifest@1
+      displayName: Destroy
+      inputs:
+        action: 'destroy'
+        connectionType: 'kubernetesServiceConnection'
+        kubernetesServiceConnection: 'aws-kubernetes-cluster-service-connection'
+        namespace: 'default'
+        manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
+        containers: shaunmadziva/currency-exchange-devops:$(tag)
 
