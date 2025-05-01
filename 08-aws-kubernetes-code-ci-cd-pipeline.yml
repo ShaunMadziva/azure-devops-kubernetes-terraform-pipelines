@@ -54,6 +54,7 @@ stages:
         itemPattern: '**/*.yaml'
         targetPath: '$(System.ArtifactsDirectory)'
     - task: KubernetesManifest@1
+      displayName: Deploy
       inputs:
         action: 'deploy'
         connectionType: 'kubernetesServiceConnection'
@@ -63,6 +64,7 @@ stages:
         containers: shaunmadziva/currency-exchange-devops:$(tag)
 
     # - task: KubernetesManifest@1
+    #   displayName: Destroy
     #   inputs:
     #     action: 'destroy'
     #     connectionType: 'kubernetesServiceConnection'
