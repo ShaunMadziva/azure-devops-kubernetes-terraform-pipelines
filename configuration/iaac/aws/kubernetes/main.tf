@@ -1,3 +1,7 @@
+# aws:s3:::shaun-terraform-backend-state
+
+
+
 terraform {
   required_providers {
     kubernetes = {
@@ -27,7 +31,7 @@ module "lfacademy-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "lfacademy-cluster"
   cluster_version = "1.28"
-  subnet_ids      = ["subnet-0565c72c8be2a4a50", "subnet-0e0be61b12e125be5"]
+  subnet_ids      = ["subnet-0419b48001c8a4fe6", "subnet-05fd749458babbd54"]
   vpc_id                         = aws_default_vpc.default.id
   cluster_endpoint_public_access = true
   eks_managed_node_groups = {
