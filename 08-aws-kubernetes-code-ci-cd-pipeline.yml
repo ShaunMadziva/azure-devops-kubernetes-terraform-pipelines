@@ -66,7 +66,7 @@ stages:
     - task: KubernetesManifest@1
       displayName: Destroy
       inputs:
-        action: 'destroy'
+        action: 'delete'
         connectionType: 'kubernetesServiceConnection'
         kubernetesServiceConnection: 'aws-kubernetes-cluster-service-connection'
         namespace: 'default'
