@@ -16,7 +16,7 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build image
+  displayName: Build the docker image
   jobs:
   - job: Build
     displayName: Build
@@ -31,6 +31,7 @@ stages:
         tags: |
           $(tag)
     - task: CopyFiles@2
+      displayName: copy yaml file from project to container
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)'
         Contents: '**/*.yaml'
@@ -42,31 +43,31 @@ stages:
         publishLocation: 'Container'
 
 - stage: Deploy
-  displayName: Configure Cluster
+  displayName: Configure k8s Cluster
   jobs: 
   - job: Deploy
     displayName: Deploy
     steps: 
-    # - task: DownloadPipelineArtifact@2
-    #   inputs:
-    #     buildType: 'current'
-    #     artifactName: 'manifests'
-    #     itemPattern: '**/*.yaml'
-    #     targetPath: '$(System.ArtifactsDirectory)'
-    # - task: KubernetesManifest@1
-    #   displayName: Deploy
-    #   inputs:
-    #     action: 'deploy'
-    #     connectionType: 'kubernetesServiceConnection'
-    #     kubernetesServiceConnection: 'aws-kubernetes-cluster-service-connection'
-    #     namespace: 'default'
-    #     manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
-    #     containers: shaunmadziva/currency-exchange-devops:$(tag)
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'manifests'
+        itemPattern: '**/*.yaml'
+        targetPath: '$(System.ArtifactsDirectory)'
+    - task: KubernetesManifest@1
+      displayName: Deploy
+      inputs:
+        action: 'deploy'
+        connectionType: 'kubernetesServiceConnection'
+        kubernetesServiceConnection: 'aws-kubernetes-cluster-service-connection'
+        namespace: 'default'
+        manifests: '$(System.ArtifactsDirectory)/configuration/kubernetes/deployment.yaml'
+        containers: shaunmadziva/currency-exchange-devops:$(tag)
 
     - task: KubernetesManifest@1
       displayName: Destroy
       inputs:
-        action: 'delete'
+        action: 'destroy'
         connectionType: 'kubernetesServiceConnection'
         kubernetesServiceConnection: 'aws-kubernetes-cluster-service-connection'
         namespace: 'default'
